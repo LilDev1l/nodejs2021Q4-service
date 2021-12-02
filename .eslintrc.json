@@ -1,5 +1,6 @@
 {
   "root": true,
+  "parser": "@babel/eslint-parser",
   "env": {
     "es2020": true,
     "jasmine": true,
@@ -11,7 +12,8 @@
     "ecmaVersion": 2021,
     "ecmaFeatures": {
       "impliedStrict": true
-    }
+    },
+    "requireConfigFile": false
   },
   "settings": {
     "noInlineConfig": true
