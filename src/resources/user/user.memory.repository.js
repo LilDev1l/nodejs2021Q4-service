@@ -1,6 +1,7 @@
 const User = require('./user.model');
 
 class UserRepository {
+  // eslint-disable-line
   static #users = [];
 
   static getAll = () => this.#users;

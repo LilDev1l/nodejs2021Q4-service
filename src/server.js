@@ -10,6 +10,7 @@ server.register(require('fastify-swagger'), {
   }
 });
 server.register(require('./resources/user/user.router'), { prefix: '/users' });
+server.register(require('./resources/board/board.router'), { prefix: '/boards' });
 
 module.exports = server;
 
