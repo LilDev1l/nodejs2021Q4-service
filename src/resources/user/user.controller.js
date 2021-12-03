@@ -1,30 +1,31 @@
+const { StatusCodes } = require('http-status-codes');
 const userService = require('./user.service');
 
 const getAll = (req, reply) => {
   const users = userService.getAll();
 
-  reply.send(users);
+  reply.code(StatusCodes.OK).send(users);
 };
 
 const getOne = (req, reply) => {
   const { userId } = req.params;
   const user = userService.getOne(userId);
 
-  reply.send(user);
+  reply.code(StatusCodes.OK).send(user);
 };
 
 const add = (req, reply) => {
   const newParam =  req.body;
   const newUser = userService.addOne(newParam);
 
-  reply.code(201).send(newUser);
+  reply.code(StatusCodes.CREATED).send(newUser);
 }
 
 const remove = (req, reply) => {
   const { userId } = req.params;
   userService.remove(userId);
 
-  reply.code(204).send();
+  reply.code(StatusCodes.NO_CONTENT).send();
 }
 
 const update = (req, reply) => {
@@ -32,7 +33,7 @@ const update = (req, reply) => {
   const updateParam =  req.body;
   const updateUser = userService.update(userId, updateParam);
 
-  reply.code(200).send(updateUser);
+  reply.code(StatusCodes.OK).send(updateUser);
 }
 
 module.exports = {

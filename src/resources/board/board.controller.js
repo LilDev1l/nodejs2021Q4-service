@@ -1,30 +1,31 @@
+const { StatusCodes } = require('http-status-codes');
 const boardService = require('./board.service');
 
 const getAll = (req, reply) => {
   const boards = boardService.getAll();
 
-  reply.send(boards);
+  reply.code(StatusCodes.OK).send(boards);
 };
 
 const getOne = (req, reply) => {
   const { boardId } = req.params;
   const board = boardService.getOne(boardId);
 
-  reply.send(board);
+  reply.code(StatusCodes.OK).send(board);
 };
 
 const add = (req, reply) => {
   const newParam =  req.body;
   const newBoard = boardService.addOne(newParam);
 
-  reply.code(201).send(newBoard);
+  reply.code(StatusCodes.CREATED).send(newBoard);
 }
 
 const remove = (req, reply) => {
   const { boardId } = req.params;
   boardService.remove(boardId);
 
-  reply.code(204).send();
+  reply.code(StatusCodes.NO_CONTENT).send();
 }
 
 const update = (req, reply) => {
@@ -32,7 +33,7 @@ const update = (req, reply) => {
   const updateParam =  req.body;
   const updateBoard = boardService.update(boardId, updateParam);
 
-  reply.code(200).send(updateBoard);
+  reply.code(StatusCodes.OK).send(updateBoard);
 }
 
 module.exports = {
