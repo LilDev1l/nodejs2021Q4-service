@@ -1,18 +1,18 @@
 const { v4: uuidv4 } = require('uuid');
 const { StatusCodes } = require('http-status-codes');
-const validResource = require('../../utils/infoMessages')('task');
+const infoMessages = require('../../utils/infoMessages')('task');
 const TaskRepo = require('./task.memory.repository');
 const { InvalidDataInRequestError, NotFoundError } = require('../../errors/index');
 
 
 function validId(id) {
   if (!uuidv4(id)) {
-    throw new InvalidDataInRequestError(StatusCodes.BAD_REQUEST, validResource.uuidInvalidMessage(id));
+    throw new InvalidDataInRequestError(StatusCodes.BAD_REQUEST, infoMessages.uuidInvalidMessage(id));
   }
 }
 function checkExistElement(element, id) {
   if (!element) {
-    throw new NotFoundError(StatusCodes.NOT_FOUND, validResource.notFoundMessage(id));
+    throw new NotFoundError(StatusCodes.NOT_FOUND, infoMessages.notFoundMessage(id));
   }
 }
 
