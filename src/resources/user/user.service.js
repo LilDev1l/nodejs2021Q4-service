@@ -1,6 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
 const { StatusCodes } = require('http-status-codes');
-const validResource = require('../../utils/constants')('user');
+const validResource = require('../../utils/infoMessages')('user');
 const UserRepo = require('./user.memory.repository');
 const TaskRepo = require('../task/task.memory.repository');
 const { InvalidDataInRequestError, NotFoundError } = require('../../errors/index');

@@ -1,6 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
 const { StatusCodes } = require('http-status-codes');
-const validResource = require('../../utils/constants')('board');
+const validResource = require('../../utils/infoMessages')('board');
 const BoardRepo = require('./board.memory.repository');
 const ColumnRepo = require('../column/column.memory.repository');
 const TaskRepo = require('../task/task.memory.repository');
