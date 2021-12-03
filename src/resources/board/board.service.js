@@ -12,6 +12,7 @@ function validId(id) {
     throw new InvalidDataInRequestError(StatusCodes.BAD_REQUEST, validResource.uuidInvalidMessage(id));
   }
 }
+
 function checkExistElement(element, id) {
   if (!element) {
     throw new NotFoundError(StatusCodes.NOT_FOUND, validResource.notFoundMessage(id));
@@ -29,9 +30,10 @@ const getOne = (id) => {
 };
 
 const addOne = newParam => {
-  // eslint-disable-next-line no-param-reassign
-  newParam.columns = newParam.columns.map(c => ColumnRepo.insert(c));
-  return BoardRepo.insert(newParam);
+  const columns = newParam.columns.map(c => ColumnRepo.insert(c));
+  const newParamWithColumns = { ...newParam, columns };
+
+  return BoardRepo.insert(newParamWithColumns);
 };
 
 const remove = id => {
