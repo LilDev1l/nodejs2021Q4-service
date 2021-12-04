@@ -1,4 +1,4 @@
-const { v4: uuidv4 } = require('uuid');
+const { validate: uuidValidate } = require('uuid');
 const { StatusCodes } = require('http-status-codes');
 const infoMessages = require('../../utils/infoMessages')('task');
 const TaskRepo = require('./task.memory.repository');
@@ -6,7 +6,7 @@ const { InvalidDataInRequestError, NotFoundError } = require('../../errors/index
 
 
 function validId(id) {
-  if (!uuidv4(id)) {
+  if (!uuidValidate(id)) {
     throw new InvalidDataInRequestError(StatusCodes.BAD_REQUEST, infoMessages.uuidInvalidMessage(id));
   }
 }
