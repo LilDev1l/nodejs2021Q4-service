@@ -1,26 +1,17 @@
-const { validate: uuidValidate } = require('uuid');
 const { StatusCodes } = require('http-status-codes');
-const infoMessages = require('../../utils/infoMessages')('task');
+const infoMessagesWithContext = require('../../utils/errorProcessing').infoMessagesWithContext('task');
 const TaskRepo = require('./task.memory.repository');
-const { InvalidDataInRequestError, NotFoundError } = require('../../errors/index');
+const { NotFoundError } = require('../../errors/index');
 
-
-function validId(id) {
-  if (!uuidValidate(id)) {
-    throw new InvalidDataInRequestError(StatusCodes.BAD_REQUEST, infoMessages.uuidInvalidMessage(id));
-  }
-}
 function checkExistElement(element, id) {
   if (!element) {
-    throw new NotFoundError(StatusCodes.NOT_FOUND, infoMessages.notFoundMessage(id));
+    throw new NotFoundError(StatusCodes.NOT_FOUND, infoMessagesWithContext.notFoundMessage(id));
   }
 }
 
 const getAll = (boardId) => TaskRepo.getAll(boardId);
 
 const getOne = (ids) => {
-  validId(ids.boardId);
-  validId(ids.taskId);
   const task = TaskRepo.getOne(ids);
   checkExistElement(task, ids.taskId);
 
@@ -30,8 +21,6 @@ const getOne = (ids) => {
 const addOne = newParam => TaskRepo.insert(newParam);
 
 const remove = ids => {
-  validId(ids.boardId);
-  validId(ids.taskId);
   const task = TaskRepo.getOne(ids);
   checkExistElement(task, ids.taskId);
 
@@ -39,8 +28,6 @@ const remove = ids => {
 };
 
 const update = (ids, updateParam) => {
-  validId(ids.boardId);
-  validId(ids.taskId);
   const task = TaskRepo.getOne(ids);
   checkExistElement(task, ids.taskId);
 

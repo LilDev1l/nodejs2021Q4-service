@@ -1,25 +1,18 @@
-const { validate: uuidValidate } = require('uuid');
 const { StatusCodes } = require('http-status-codes');
-const infoMessages = require('../../utils/infoMessages')('user');
+const infoMessagesWithContext = require('../../utils/errorProcessing').infoMessagesWithContext('user');
 const UserRepo = require('./user.memory.repository');
 const TaskRepo = require('../task/task.memory.repository');
-const { InvalidDataInRequestError, NotFoundError } = require('../../errors/index');
+const { NotFoundError } = require('../../errors/index');
 
-function validId(id) {
-  if (!uuidValidate(id)) {
-    throw new InvalidDataInRequestError(StatusCodes.BAD_REQUEST, infoMessages.uuidInvalidMessage(id));
-  }
-}
 function checkExistElement(element, id) {
   if (!element) {
-    throw new NotFoundError(StatusCodes.NOT_FOUND, infoMessages.notFoundMessage(id));
+    throw new NotFoundError(StatusCodes.NOT_FOUND, infoMessagesWithContext.notFoundMessage(id));
   }
 }
 
 const getAll = () => UserRepo.getAll();
 
 const getOne = (id) => {
-  validId(id);
   const user = UserRepo.getOne(id);
   checkExistElement(user, id);
 
@@ -29,7 +22,6 @@ const getOne = (id) => {
 const addOne = newParam => UserRepo.insert(newParam);
 
 const remove = id => {
-  validId(id);
   const user = UserRepo.getOne(id);
   checkExistElement(user, id);
 
@@ -40,7 +32,6 @@ const remove = id => {
 };
 
 const update = (id, updateParam) => {
-  validId(id);
   const user = UserRepo.getOne(id);
   checkExistElement(user, id);
 
